@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Products collection
+    match /products/{productId} {
+      // Read: allow if authenticated (logged in)
+      allow read: if request.auth != null;
+
+      // Write: only if the authenticated user's email is the admin email
+      allow create, update, delete: if request.auth != null 
+        && request.auth.email == "admin@yourstore.com";   // 🔁 Replace with your admin email
+
+      // Optional: validate data on write
+      allow create: if request.resource.data.keys().hasAll(['name', 'price', 'category', 'imageUrl'])
+        && request.resource.data.price is float
+        && request.resource.data.price >= 0;
+    }
+  }
+}
