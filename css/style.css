@@ -344,4 +344,4 @@ body {
   .search-wrapper input { width: 100px; }
   .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
   .cart-sidebar { width: 100%; right: -100%; }
-}
+  }
