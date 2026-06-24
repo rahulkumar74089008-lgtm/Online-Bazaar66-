@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bazaar66 | Premium Shopping Store</title>
+    <!-- Google Fonts & FontAwesome Icons for Professional Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Professional Navigation Bar -->
+    <header class="navbar">
+        <div class="logo"><i class="fa-solid fa-bag-shopping"></i> OnlineBazaar<span>66</span></div>
+        <nav>
+            <a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="admin.html"><i class="fa-solid fa-user-gear"></i> Admin Panel</a>
+        </nav>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Upgrade Your Style</h1>
+            <p>Discover Premium Collections & Trendy Outfits At Best Prices.</p>
+            <a href="#shop-now" class="hero-btn">Shop Now <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Main Shopping Area -->
+    <main class="container" id="shop-now">
+        <h2 class="section-title">Trending Products</h2>
+        
+        <!-- Products Grid (Firebase se automatic load hoga) -->
+        <div id="products-grid" class="products-grid">
+            <div class="loader-box">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <p>Loading premium products...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase Connection -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+
