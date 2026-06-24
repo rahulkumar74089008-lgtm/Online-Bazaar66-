@@ -1,19 +1,18 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Products collection
-    match /products/{productId} {
-      // Read: allow if authenticated (logged in)
+
+    // Users collection – allow users to read their own role, and self-write
+    match /users/{userId} {
       allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
 
-      // Write: only if the authenticated user's email is the admin email
-      allow create, update, delete: if request.auth != null 
-        && request.auth.email == "admin@yourstore.com";   // 🔁 Replace with your admin email
-
-      // Optional: validate data on write
-      allow create: if request.resource.data.keys().hasAll(['name', 'price', 'category', 'imageUrl'])
-        && request.resource.data.price is float
-        && request.resource.data.price >= 0;
+    // Products collection – read for all authenticated, write only for admins
+    match /products/{productId} {
+      allow read: if request.auth != null;
+      allow create, update, delete: if request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
     }
   }
 }
