@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- meta, title, CSS etc. -->
+    <title>Online Bazaar 66</title>
 </head>
 <body>
-  <!-- आपके सारे UI एलिमेंट्स (जिनके IDs ऊपर उपयोग किए गए हैं) -->
-  
-  <!-- केवल एक ही script tag -->
-  <script type="module" src="js/app.js"></script>
+
+    <!-- Sections -->
+    <div id="loginSection"></div>
+    <div id="userSection"></div>
+    <div id="adminSection"></div>
+    
+    <!-- Buttons and Forms -->
+    <button id="logoutBtn">Logout</button>
+    <form id="loginForm"></form>
+    <form id="signupForm"></form>
+    
+    <!-- Product Area -->
+    <div id="featuredProducts"></div>
+    <div id="loadingIndicator">Loading...</div>
+    <div id="emptyMessage"></div>
+    
+    <!-- Admin/Cart Forms -->
+    <form id="adminAddProductForm"></form>
+    <form id="checkoutForm"></form>
+
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
