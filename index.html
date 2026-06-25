@@ -1,3 +1,173 @@
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online-Bazaar66 | Professional E-commerce Store</title>
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/891/891419.png">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo-container">
+                <a href="#" class="logo">Online-Bazaar66</a>
+                <span class="tagline">Your Trusted Shopping Destination</span>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#categories" class="nav-link">Categories</a>
+                <a href="#deals" class="nav-link">Deals</a>
+                <a href="#cart" class="nav-link cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <a href="#account" class="nav-link account-link" id="accountLink">
+                    <i class="fas fa-user"></i>
+                    <span id="userStatus">Account</span>
+                </a>
+            </div>
+            
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to Online-Bazaar66</h1>
+            <p>Discover amazing products at unbeatable prices. Secure shopping guaranteed.</p>
+            <button class="btn-primary" id="shopNowBtn">Shop Now</button>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="E-commerce shopping">
+        </div>
+    </section>
+
+    <!-- Authentication Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Login / Register</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" id="loginTab">Login</button>
+                <button class="tab-btn" id="registerTab">Register</button>
+            </div>
+            
+            <form id="authForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+                
+                <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="authSubmitBtn">Login</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p id="authToggleText">Don't have an account? <a href="#" id="authToggleLink">Register here</a></p>
+                <p class="security-note">
+                    <i class="fas fa-shield-alt"></i> Your data is secured with encryption
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-container" id="productsContainer">
+            <!-- Products will be loaded dynamically -->
+            <div class="loading-spinner" id="loadingSpinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading products...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Shopping Cart</h3>
+            <button class="close-cart-btn" id="closeCartBtn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart-msg" id="emptyCartMsg">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="btn-primary checkout-btn" id="checkoutBtn" disabled>Proceed to Checkout</button>
+            <button class="btn-secondary clear-cart-btn" id="clearCartBtn">Clear Cart</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Online-Bazaar66</h3>
+                <p>Your trusted online shopping destination since 2023. We prioritize security and customer satisfaction.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#products">Products</a>
+                <a href="#categories">Categories</a>
+                <a href="#deals">Today's Deals</a>
+            </div>
+            <div class="footer-section">
+                <h3>Security & Privacy</h3>
+                <p><i class="fas fa-lock"></i> Secure Payment</p>
+                <p><i class="fas fa-shield-alt"></i> Data Protection</p>
+                <p><i class="fas fa-user-shield"></i> Privacy Guaranteed</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Online-Bazaar66. All rights reserved. | <a href="#" id="privacyLink">Privacy Policy</a> | <a href="#" id="termsLink">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <!-- Firebase config must be loaded first -->
+    <script src="firebase-config.js"></script>
+    <!-- Then load the main app -->
+    <script src="js/app.js"></script>
+    
+    <!-- Security overlay to prevent XSS -->
+    <div id="securityOverlay" style="display:none;"></div>
+</body>
+  </html>
